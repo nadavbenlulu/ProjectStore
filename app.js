@@ -18,19 +18,17 @@ app.set('views','./api/v1/views');//הגדרת התיקייה בה נמצאות 
 app.engine('handlebars',hbs.engine({
 layoutsDir:'./api/v1/views/layouts',
 partialsDir:'./api/v1/views/partials'
-
 }));
-
-
 app.set('view engine','handlebars');//הגדרת התצוגה של הנדלברס כתצוגה אקטיבית באפליקציה 
 app.use(cors());
-
-
-
 //רישום ראוטרים באפךיקצייה
 app.use(morgan('dev'));//שימוש במורגן לניטור בקשות http בפורמט פיתוח 
 app.use(express.json());//הוספת שכבה לטיפול בבקשות בקידוד של גייסון
-app.use(express.urlencoded());//הוספת שכבה לטיפול בבקשות עם גוף בקשה לקידוד של יוראל אנקודד
+app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded());//הוספת שכבה לטיפול בבקשות עם גוף בקשה לקידוד של יוראל אנקודד
+app.get('/', (req, res) => {
+    res.render('index'); // או כל שם אחר שיש לקובץ הראשי שלך בתיקיית ה-views
+});
 app.use('/product',productrouter);//שילוב הראוטר בתוך האפליקצייה 
 app.use('/order',orderRouter);
 app.use('/user',userRouter);
@@ -47,19 +45,5 @@ mongoose.connect(mongoConstr).then((stat)=>{
 console.log("connected to MongoDB");
 })
 
-//חיבור לבסיס נתונים מסוג  MYSQL 
-
-//ניצור סכימה שזה מבנה עבור מוצר מבנה 
-
-//כעת ניצור מודל עבור מוצר שזה החיבור של הסכימה יחד עם הטבלה בבסיס הנתונים 
-//הפונקציה מקבלת שתי פרמטרים הראשון שם הטבלה בבסיס הנתונים והשני את הסכימה (תבנית ) איתה נעבוד מול הטבל בבסיס הנתונים)
-// Product.insertOne({pid:7,price:10,pname:"water"});
-
-
-//מחיקה לא חובה
-// Product.deleteOne({pid:1}).then((count)=>{
-//     console.log('product deleted');
-// })
-//היייי
 
 module.exports=app;
