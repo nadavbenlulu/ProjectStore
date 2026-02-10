@@ -5,44 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Electrical Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+      .hero-video-container {
+        width: 100%;
+        max-height: 280px; 
+        overflow: hidden;
+        position: relative;
+      }
+      .hero-video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+      }
+    </style>
+
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Electrical Product</a>
+    <a class="navbar-brand fw-bold" href="#">Electrical Product</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-medium">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link active" aria-current="page" href="#">דף הבית</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            מוצרים
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+          <ul class="dropdown-menu text-end">
+            <li><a class="dropdown-item" href="#">סמארטפונים</a></li>
+            <li><a class="dropdown-item" href="#">מחשבים</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">אביזרים</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          <a class="nav-link" href="#">אודות</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">צור קשר</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+      <div class="d-flex align-items-center gap-3">
+        
+        <a href="/login" class="text-dark text-decoration-none d-flex align-items-center gap-1 fw-semibold order-lg-2">
+          <i class="bi bi-person-circle fs-4"></i>
+          <span class="d-none d-md-inline">כניסה</span>
+        </a>
+
+        <form class="d-flex order-lg-1" role="search">
+          <div class="input-group">
+            <input class="form-control" type="search" placeholder="חפש מוצר..." aria-label="Search">
+            <button class="btn btn-dark" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+
+      </div>
     </div>
   </div>
 </nav>
+<div class="hero-video-container mb-4">
+        <video autoplay muted loop playsinline>
+            <source src="/uploads/videos/macbook1.mp4" type="video/mp4">
+            הדפדפן שלך לא תומך בוידאו.
+        </video>
+    </div>
 {{{body}}}
     <h1></h1>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
