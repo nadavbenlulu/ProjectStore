@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     try {
         // 1. חילוץ הטוקן מה-Header של הבקשה
-        // הסטנדרט הוא: Bearer <TOKEN>
+        //   Bearer <TOKEN>
         const authHeader = req.headers.authorization;
         
         if (!authHeader) {
@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
         // 3. שמירת פרטי המשתמש המפוענחים בתוך האובייקט req לשימוש בהמשך
         req.user = decoded;
 
-        // הכל תקין? אפשר להמשיך לפונקציה הבאה (ה-Controller)
         next();
 
     } catch (error) {
