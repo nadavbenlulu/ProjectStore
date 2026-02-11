@@ -1,6 +1,7 @@
 const express=require('express');
 const router = express.Router();
 const usercontroller=require('../controllers/user');
+const auth = require('../middelwares/auth');
 // const{login,register}=require('../controllers/user');
 const{getALLuser,
     addNewuser,

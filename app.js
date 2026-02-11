@@ -2,6 +2,7 @@ require('dotenv').config();// הפעלת פונקציה שמשלבת את משת
 
 // פה כל הקוד של השרת מגדיר אותו  
 const express=require('express');// חיבור לספריית אקספרס
+const jwt = require('jsonwebtoken');
 const { pid } = require('process');
 const app=express();// יצירת מופע של אפלקיציית  השרת 
 const productrouter=require('./api/v1/routes/product');

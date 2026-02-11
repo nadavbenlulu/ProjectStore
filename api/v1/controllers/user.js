@@ -1,9 +1,9 @@
 const user = require("../models/user");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); // <--- הוספנו את הספרייה
 
 const obj = {
     getALLuser: (req, res) => {
-        // שיניתי ל-user באות קטנה שיתאים לייבוא שלך למעלה
         user.find().then((data) => {
             return res.status(200).json(data);
         });
@@ -15,7 +15,6 @@ const obj = {
             if (data.length > 0) {
                 return res.status(200).json({ message: `user id ${uid} already exist` });
             } else {
-                // במונגוס משתמשים ב-create או save, insertOne שייך לדרייבר המקורי
                 user.create(req.body).then((use) => {
                     return res.status(200).json(use);
                 });
@@ -62,36 +61,45 @@ const obj = {
                 if (!isMatch) {
                     return res.status(401).json({ message: "סיסמה שגויה" });
                 }
-                // חזרה לדף הבית לאחר התחברות מוצלחת
-                return res.redirect('/');
+
+                // --- יצירת הטוקן לפי ההסבר של ירון לפידות ---
+                const token = jwt.sign(
+                    { email: userData.email, fullname: userData.fullname }, // תוכן להצפנה
+                    process.env.PRIVATE_KEY, // מפתח פרטי מה-env
+                    { expiresIn: '1h' } // אובייקט אפשרויות (תוקף לשעה)
+                );
+
+                // מחזירים את הטוקן למשתמש (במקום ה-redirect שהיה קודם)
+                return res.status(200).json({
+                    message: "התחברת בהצלחה!",
+                    token: token
+                });
+                // ------------------------------------------
             });
         }).catch(err => res.status(500).json(err));
     },
 
- register: (req, res) => {
-    const { email, password, fullname } = req.body;
+    register: (req, res) => {
+        const { email, password, fullname } = req.body;
 
-    // בדיקה אם המשתמש כבר קיים
-    user.findOne({ email: email }).then((data) => {
-        if (data) {
-            return res.status(400).json({ message: "האימייל כבר רשום במערכת" });
-        } else {
-            // הצפנת הסיסמה לפני השמירה
-            bcrypt.hash(password, 10).then((hashPass) => {
-                const newUser = new user({
-                    email: email,
-                    password: hashPass,
-                    fullname: fullname
-                });
+        user.findOne({ email: email }).then((data) => {
+            if (data) {
+                return res.status(400).json({ message: "האימייל כבר רשום במערכת" });
+            } else {
+                bcrypt.hash(password, 10).then((hashPass) => {
+                    const newUser = new user({
+                        email: email,
+                        password: hashPass,
+                        fullname: fullname
+                    });
 
-                // כאן אנחנו שומרים ומחזירים הודעת אישור
-                newUser.save().then((savedUser) => {
-                    return res.status(201).send("<h1>ההרשמה הצליחה!</h1><p>המשתמש נשמר בהצלחה. עכשיו תוכל לבדוק ב-MongoDB Compass אם הוא מופיע שם.</p><a href='/'>חזור לדף הבית</a>");
+                    newUser.save().then((savedUser) => {
+                        return res.status(201).send("<h1>ההרשמה הצליחה!</h1><p>המשתמש נשמר בהצלחה.</p><a href='/'>חזור לדף הבית</a>");
+                    });
                 });
-            });
-        }
-    }).catch(err => res.status(500).json(err));
-},
+            }
+        }).catch(err => res.status(500).json(err));
+    },
 }
 
 module.exports = obj;
